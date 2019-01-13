@@ -7,16 +7,7 @@
 %                  | imgs_train_whaleIDs(folder)-whale_ID(folders) with its corresponding images                
 %                  | train.csv
 %                  | pictures 
-%% divide the training dataset
-% traning dataset->traning dataset + vaildation set(100) 
 
-% a datastore for the images 
-imds = imageDatastore('C:\semester5\MachineLearning\ProjectData\imgs\w_*.jpg');
-
-
-
-%% before run this code. You need to create localy 2 folders in imgs folder in order to store the data
-%  folder1£ºCSVs_train , folder2:imgs_train_whaleIDs
 %% Organize Image files in a separate folder for each whaleID
 dataFolder = uigetdir(cd,'select folder containing imgs folder & train.csv');
 cd(dataFolder);
