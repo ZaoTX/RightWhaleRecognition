@@ -1,6 +1,6 @@
 %% this step is preparing for deep learning 
 % before run this code. You need to create localy 2 folders in imgs folder in order to store the data
-%  folder1£ºCSVs_train , folder2:imgs_train_whaleIDs
+%  folder1:CSVs_train , folder2:imgs_train_whaleIDs
 % you only need to run it 1 time. 
 % your folder order should be like this :
 % imgs(folder)------ CSVs_train(folder)-whaleID.csv with its corresponding imageNames store in csv
