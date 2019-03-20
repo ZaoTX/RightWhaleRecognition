@@ -1,15 +1,21 @@
-%% this step is preparing for deep learning 
-% before run this code. You need to create localy 2 folders in imgs folder in order to store the data
-%  folder1:CSVs_train , folder2:imgs_train_whaleIDs
-% you only need to run it 1 time. 
-% your folder order should be like this :
-% imgs(folder)------ CSVs_train(folder)-whaleID.csv with its corresponding imageNames store in csv
-%                  | imgs_train_whaleIDs(folder)-whale_ID(folders) with its corresponding images                
-%                  | train.csv
-%                  | pictures 
+%% Read images according to train.csv and categorized images into different subfolders according to labels.
+%  preconditions:
+%  1. downloaded the following file into one folder from kaggle(https://www.kaggle.com/c/noaa-right-whale-recognition/data)
+%     train.csv, imgs.zip file and w_7489.jpg
+%
+%  2. put train.csv and w_7489.jpg into imgs folder.
+%
+%  3. create two subfolders in imgs folder to store data:
+%  folder1: CSVs_train, folder2: imgs_train_whaleIDs
+
+%  your folder order should be like this :
+%  imgs(folder)------ CSVs_train(folder)-whaleID.csv with its corresponding imageNames store in csv
+%                   | imgs_train_whaleIDs(folder)-whale_ID(folders) with its corresponding images                
+%                   | train.csv
+%                   | images 
 
 %% Organize Image files in a separate folder for each whaleID
-dataFolder = uigetdir(cd,'select folder containing imgs folder & train.csv');
+dataFolder = uigetdir(cd,'select imgs folder');
 cd(dataFolder);
 % Extract whaleID counts & corresponding image files
 train = readtable([dataFolder filesep 'train.csv'],'Format','%s%C');
