@@ -52,3 +52,89 @@ sub_validationSet.Labels = cat(1,val_two.Labels, val_final.Labels);
 store_to_local(testSet,'test_images');
 store_to_local(sub_validationSet, 'validation_images');
 store_to_local(sub_trainSet, 'train_images');
+
+
+%% Oversampling inbalanced sub_trainSet
+
+% aggressive oversamplings : generate 9 copies of each image in sub_trainSet
+% using image transformations and store in local folders.
+
+numImages = numel(sub_trainSet.Files);
+
+local = uigetdir(cd,'select folder to save data');
+cd(local);
+des = [local filesep 'transformed_imgs'];
+ if ~exist('transformed_imgs','dir')
+         mkdir('transformed_imgs');
+ end
+ cd(des);
+for i = 1:numImages
+    [img,fileinfo] = readimage(sub_trainSet, i);
+    whaleID_str = strsplit(fileinfo.Filename,  '/');
+    whaleID_str = char(whaleID_str(end-1));
+   
+    destfolder = [des filesep whaleID_str];
+     % create a folder for each whale (if non existant)
+      if ~exist(whaleID_str,'dir')
+          mkdir(whaleID_str);
+      end
+      
+     % Filter images
+     h = fspecial('unsharp');
+     I1 = imfilter(img,h);
+     
+     
+     % imadjust
+     I_gray = rgb2gray(img);
+     I2 = imadjust(I_gray);
+     
+     % image transformation
+     % 1. rotation
+     % generate two ramdom rotation matrices
+     a = 30; % angle is 30
+     R = [cosd(a) sind(a) 0; -sind(a) cosd(a) 0; 0 0 1];
+     img_rotate = affine2d(R);
+     I3 = imwarp(img,img_rotate);
+     
+     
+     % shear
+     % generate random shear matrix 
+     b = 0.75;
+     S1 = [1 b 0; 0 1 0; 0 0 1]; % shear factor along the x axis is 1.5
+     S2 = [1 0 0; b 1 0; 0 0 1]; % shear factor along the y axis is 1.5
+     
+     img_shear1 = affine2d(S1);
+     img_shear2 = affine2d(S2);
+     I4 = imwarp(img,img_shear1);
+     I5 = imwarp(img,img_shear2);
+     
+     % two type of compositions ('rotation + shear' & 'shear + rotation')
+     RS1 = R * S1;
+     S1R = S1 * R;
+     RS2 = R * S2;
+     S2R = S2 * S2;
+     
+     img_r_s_1 = affine2d(RS1);
+     img_s_1_r = affine2d(S1R);
+     img_r_s_2 = affine2d(RS2);
+     img_s_2_r = affine2d(S2R);
+     
+     I6 = imwarp(img,img_r_s_1);
+     I7 = imwarp(img,img_s_1_r);
+     I8 = imwarp(img,img_r_s_2);
+     I9 = imwarp(img,img_s_2_r);
+     
+     formatStr = '%s_%d_%d.jpg';
+     
+     for j = 1:9
+     img_tmp =  eval(sprintf('I%d',j));   
+     fileName = char(sprintf(formatStr, whaleID_str,i,j));
+     fullFileName = fullfile(destfolder, fileName);
+     if ~exist(fullFileName, 'file')
+         imwrite(img_tmp, fullFileName,'jpg');
+     end
+     
+     end  
+   
+end
+
