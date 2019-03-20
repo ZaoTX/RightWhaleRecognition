@@ -53,10 +53,7 @@ store_to_local(testSet,'test_images');
 store_to_local(sub_validationSet, 'validation_images');
 store_to_local(sub_trainSet, 'train_images');
 
-
-%% Oversampling inbalanced sub_trainSet
-
-% aggressive oversamplings : generate 9 copies of each image in sub_trainSet
+%% aggressive oversamplings : generate 9 copies of each image in sub_trainSet
 % using image transformations and store in local folders.
 
 numImages = numel(sub_trainSet.Files);
