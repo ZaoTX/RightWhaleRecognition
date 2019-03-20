@@ -14,9 +14,8 @@
 
 ## Recognition
 
-### Recogniting
 
-#### SVM
+### SVM
 
-#### Deeplearning
+### Deeplearning
 
