@@ -1,6 +1,6 @@
 # RightWhaleRecognition
 
-## preprocessing
+## Preprocessing
 - readData.m : the first file to read images according to train.csv and categorized images into different subfolders according to labels.
 
 ### For recognition
@@ -9,6 +9,7 @@
 
 - crop.m : load 'gTruth.mat', change path, and crop whale head according to ROI.
 
+- divide_n_oversampling.m: divide dataSet and oversampling inbalanced training data.
 
 ## Detection
 
