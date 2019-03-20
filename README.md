@@ -11,6 +11,8 @@
 
 - divide_n_oversampling.m: divide dataSet and oversampling inbalanced training data.
 
+- store_to_local.m: to store datastore to local folders.
+
 ## Detection
 
 
