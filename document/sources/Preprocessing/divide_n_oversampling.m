@@ -4,7 +4,7 @@ clear; close all; clc
 
 % cropped dataset->trainSet + testSet  -> sub_trainSet + sub_validationSet + testSet
 % a datastore for all the cropped images(4544) 
-dataFolder = uigetdir(cd,'select folder containing cropped images');
+dataFolder = uigetdir(cd,'select imgs_train_cropped folder');
 imds = imageDatastore(dataFolder,'IncludeSubfolders',true,'LabelSource','foldernames');
 % split the datastore into trainSet set and testSet set.
 [trainSet,testSet]= splitEachLabel(imds,0.8,'randomized');
@@ -45,3 +45,10 @@ sub_trainSet.Labels = cat(1,train_One.Labels, train_two.Labels, train_final.Labe
 
 sub_validationSet = imageDatastore(cat(1,val_two.Files, val_final.Files));
 sub_validationSet.Labels = cat(1,val_two.Labels, val_final.Labels);
+
+%% save trainSet testSet and sub_validationSet into concrete local folders.
+% After calling store2local, the first thing is to select a location to
+% store corresponding images.
+store_to_local(testSet,'test_images');
+store_to_local(sub_validationSet, 'validation_images');
+store_to_local(sub_trainSet, 'train_images');
