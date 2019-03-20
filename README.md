@@ -9,8 +9,11 @@
 
 - crop.m : load 'gTruth.mat', change path, and crop whale head according to ROI.
 
-- divide_n_oversampling.m: divide dataSet and oversampling inbalanced training data.
-
+- divide_n_oversampling.m: 
+  1. divide dataSet into testSet, sub_validationSet, sub_trainSet 
+  2. oversampling by creating 9 copies of each image in sub_trainSet.
+  3. store all dataSet in local folders.
+  
 - store_to_local.m: to store datastore to local folders.
 
 ## Detection
