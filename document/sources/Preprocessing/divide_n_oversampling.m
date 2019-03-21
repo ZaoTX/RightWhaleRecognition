@@ -47,13 +47,16 @@ sub_validationSet = imageDatastore(cat(1,val_two.Files, val_final.Files));
 sub_validationSet.Labels = cat(1,val_two.Labels, val_final.Labels);
 
 %% save trainSet testSet and sub_validationSet into concrete local folders.
-% After calling store2local, the first thing is to select a location to
+% After calling store_to_local, the first thing is to select a location to
 % store corresponding images.
 store_to_local(testSet,'test_images');
 store_to_local(sub_validationSet, 'validation_images');
 store_to_local(sub_trainSet, 'train_images');
 
-%% aggressive oversamplings : generate 9 copies of each image in sub_trainSet
+
+%% Oversampling inbalanced sub_trainSet
+
+% aggressive oversamplings : generate 9 copies of each image in sub_trainSet
 % using image transformations and store in local folders.
 
 numImages = numel(sub_trainSet.Files);
@@ -134,4 +137,6 @@ for i = 1:numImages
      end  
    
 end
+
+
 
