@@ -5,10 +5,10 @@
 function store_to_local(imds, folderName)
 
 numImages = numel(imds.Files);
-
+oldFolder = cd;
 local = uigetdir(cd,'select folder to save data');
 cd(local);
-oldFolder = cd;
+
 des = [local filesep folderName];
  if ~exist(folderName,'dir')
          mkdir(folderName);
