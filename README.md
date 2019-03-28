@@ -18,8 +18,15 @@
 
 ## Detection
 
+- cascadeObjectDetection.m: This file makes 'trained_model.xml' file which is used as detector.
 
+- trained_model.xml: Detector file made by cascadeObjectDetection.m.
 
+- detection_performance.m: 
+  1. Set folder that contains images to detect(Folder name need to be modified with user's folder name)
+  2. Control image size using loop statement considering the number of detected parts
+  3. Store the detected part using imwrite function.
+  
 ## Recognition
 
 
