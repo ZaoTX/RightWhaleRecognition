@@ -1,4 +1,4 @@
-% This file 
+% The file is to use Bag of features for the feature extraction and feature selection and use linear svm to train.
 
 %%Initialization
 clear; close all; clc
@@ -39,30 +39,13 @@ trainSet.ReadFcn = @(loc)imresize(imread(loc),inputSize);
 validationSet.ReadFcn = @(loc)imresize(imread(loc),inputSize);
 testSet.ReadFcn = @(loc)imresize(imread(loc),inputSize);
 
+%% For original dataset 'train1'(without oversampled).
+
 % Feature extraction
-
 train_original_bag = bagOfFeatures(train1);
-trainSetLabels = train1.Labels;
 
-
-
-
-%% defautl value of Boxconstraint is 1.
-
-mdl_original = trainImageCategoryClassifier(train1,train_original_bag);
-confMatrix1_1 = evaluate(mdl_original, train1);
-confMatrix1_2 = evaluate(mdl_original, validationSet);
-%%
-[labelIdx, score] = predict(mdl_original,testSet);
-
-testSetLabels = testSet.Labels;
-pred = mdl_original.Labels(labelIdx);
-%%
-accuracy = sum(sum(testSetLabels == pred'))/size(testSetLabels,1);
-
-%% initial range of hyperprameter
-c = optimizableVariable('c',[1e-3,1e3],'Transform','log');
-% sigma = optimizableVariable('sigma',[1e-3,1e3],'Transform','log');
+% initial range of hyperprameter
+c = optimizableVariable('c',[1e-2,1e1],'Transform','log');
 
 % tuning hyperprameters
 
@@ -90,18 +73,10 @@ confMatrix2 = evaluate(mdl, validationSet);
 pred1 = mdl.Labels(labelIdx1);
 
 accuracy1 = sum(sum(testSetLabels == pred1'))/size(testSetLabels,1);
-%% using the whole oversampled trainSet to train
-train_bag = bagOfFeatures(trainSet);
 
-mdl_oversampled = trainImageCategoryClassifier(trainSet,train_bag);
-confMatrix2_1 = evaluate(mdl_oversampled, trainSet);
-confMatrix2_2 = evaluate(mdl_oversampled, validationSet);
-confMatrix2_3 = evaluate(mdl_oversampled, testSet);
+%% try the oversampled train set 'trainSet'
 
-
-%% try the oversampled train set
 % Feature extraction
-
 train_bag = bagOfFeatures(trainSet);
 
 %
@@ -114,26 +89,6 @@ confMatrix_w_2 = evaluate(mdl_whole, validationSet);
 pred_w = mdl_whole.Labels(labelIdx_w);
 %
 accuracy_w = sum(sum(testSetLabels == pred_w'))/size(testSetLabels,1);
-
-
-%% give 6 possible values of 'Boxconstraint'
-
-BC = 1;
-
-params = [0.001; 0.02; 0.3; 5; 10; 300];
-Error = zeros(length(params));
-for i= 1:length(params)
-    BC = params(i);
-    BC
-    model = trainImageCategoryClassifier(train1,train_original_bag, ...
-        'learnerOptions',... 
-        templateSVM('BoxConstraint', BC),'Verbose',1);
-    Error(i) =  imageCategorical_loss(model,validationSet);
-end
- min = find(Error == min(min(Error)));
- BC_best = params(min);
-%% save
-save('hog_classification2');
 
 
 
