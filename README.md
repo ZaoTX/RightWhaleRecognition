@@ -33,4 +33,20 @@
 ### SVM
 
 ### Deeplearning
-
+If you want to get classes with more than 15 images in each class, 
+open command line at folder imgs_train_cropped.m
+create a new folder called temp1
+you can run this in command line:
+find . -mindepth 1 -maxdepth 1 -type d -exec bash -c "echo -ne '{}\t'; ls '{}' | wc -l" \; | awk -F"\t" '$NF>=15{print $1}' | tr "\n" "\0" | xargs -0 cp -r -t ../temp1
+If you change the constraint in  awk -F"\t" '$NF>=15{print $1}', you can have more different results.
+- Deblurring.m: provides some method to do Debulrring
+- getDeblurredImages.m: get the DeblurredImages and save locally
+- performance.m: after you finish training, you can run this to test the result in test set.
+- createLgraphUsingConnections.m,findLayersToReplace.m,freezeWeights.m: help function for googLeNet and InceptionV3
+you can run the rest deep learning script after you finished crop.m
+- DeepLearning.m: first deep learning script using AlexNet
+- InceptionV3.m: deep learning script using InceptionV3
+- VGG16.m:deep learning script using VGG16
+- googLeNet.m:deep learning script using googLeNet
+My google cloud server shut down so I lost many informations, you can download my model here:
+https://drive.google.com/drive/folders/1C-rvxVSaWiDmUvqqC16sOAEctvfkb_by?usp=sharing
