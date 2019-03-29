@@ -62,7 +62,7 @@ zbest = bestPoint(results);
 
 mdl = trainImageCategoryClassifier(train1,train_original_bag, ...
         'learnerOptions',... 
-        templateSVM('BoxConstraint', z.c),'Verbose',2);
+        templateSVM('BoxConstraint', zbest.c),'Verbose',2);
   
 confMatrix1 = evaluate(mdl, trainSet);
 
@@ -79,8 +79,20 @@ accuracy1 = sum(sum(testSetLabels == pred1'))/size(testSetLabels,1);
 % Feature extraction
 train_bag = bagOfFeatures(trainSet);
 
+% tuning c
+minfn_w = @(z)gather(imageCategorical_loss(trainImageCategoryClassifier(subSet,subSet_bag, ...
+        'learnerOptions',... 
+        templateSVM('BoxConstraint', z.c),'Verbose',1),validationSet));
+    
+results_w = bayesopt(minfn,c,'MaxObjectiveEvaluations',5,'Verbose',1);
+
+zbest_w = bestPoint(results);
 %
-mdl_whole = trainImageCategoryClassifier(trainSet,train_bag);
+
+mdl_whole = trainImageCategoryClassifier(trainSet,trainbag, ...
+        'learnerOptions',... 
+        templateSVM('BoxConstraint', zbest_w.c),'Verbose',2);
+        
 confMatrix_w_1 = evaluate(mdl_whole, trainSet);
 confMatrix_w_2 = evaluate(mdl_whole, validationSet);
 %%
