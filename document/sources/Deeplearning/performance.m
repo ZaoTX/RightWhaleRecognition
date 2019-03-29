@@ -4,15 +4,17 @@
 % 
 % [pred,scrs] = classify(whalenet,img);
 %% Test the performance for the whole validation set
+load('whalenetSgdm0.001.mat')
 
-[preds,scores] = classify(whalenet,val);
-Actuals = val.Labels;
+val.ReadFcn =  @(loc)imresize(imread(loc),[227 227]);
+[preds,scores] = classify(whalenet,test);
+Actuals = test.Labels;
 numCorrect = nnz(preds == Actuals);
 fracCorrect = numCorrect/numel(preds);
 
 %confusionchart(val.Labels,preds)
 %% Using for loop
-
+ 
 for i=1:numel(preds)
     %confusionchart(val.Labels(i),preds(i));
     charAct = char(Actuals(i));

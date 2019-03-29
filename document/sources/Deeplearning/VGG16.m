@@ -1,5 +1,5 @@
 %% Modify Network Layers
-whalenet = alexnet;
+whalenet = vgg16;
 %layers = whalenet.Layers;
 % get the inputSize
 inputSize = whalenet.Layers(1).InputSize;
@@ -7,8 +7,9 @@ inputSize = whalenet.Layers(1).InputSize;
 % layers(1).InputSize = inputSize1;
 % extract fileNames
 %fileNames = imds.Labels;
-layers = whalenet.Layers;
+
 layersTransfer = whalenet.Layers(1:end-3);
+%you can change the number of classes for your case
 numClasses = 111;
 % layers = [
 %     layersTransfer
@@ -17,9 +18,9 @@ numClasses = 111;
 %     softmaxLayer
 %     classificationLayer];
 % new fully connected layer
-% there are 447 right whales
+layers = whalenet.Layers;
 whaleLayer = fullyConnectedLayer(numClasses);
-layers(23) = whaleLayer;
+layers(39) = whaleLayer;
 layers(end) = classificationLayer;
 %% divide the training dataset
 % traning dataset->traning dataset + vaildation set(100) 
