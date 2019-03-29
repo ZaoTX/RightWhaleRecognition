@@ -34,7 +34,7 @@
 
 ### Deeplearning
 - If you want to get classes with more than 15 images in each class, 
-- open command line at folder imgs_train_cropped.m
+- open command line at folder imgs_train_cropped
 - create a new folder called temp1
 - you can run this in command line:
 - find . -mindepth 1 -maxdepth 1 -type d -exec bash -c "echo -ne '{}\t'; ls '{}' | wc -l" \; | awk -F"\t" '$NF>=15{print $1}' | tr "\n" "\0" | xargs -0 cp -r -t ../temp1
