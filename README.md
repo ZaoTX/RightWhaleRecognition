@@ -30,7 +30,12 @@
 ## Recognition
 
 
-### SVM
+### Traditional machine learning
+- oversampling.m: unlike the divide_n_oversampling.m created 9 copies for the whole sub_trainSet, this file only create 9 copies for classes with less than 10 images. The combination of the result of this file and the sub_trainSet would be the oversampled trainSet used for recognition in the traditional part.
+- hog_n_svm.m: Extracting hog features, feeding to svm and doing validation and testing.
+- featrueEx.m: is one function used in hog_n_svm.m
+- BoF.m: Extracting surf features, feeding to svm and doing validation and testing.
+- imageCategorical_loss.m: is one function used in BoF.m
 
 ### Deeplearning
 - If you want to get classes with more than 15 images in each class, 
